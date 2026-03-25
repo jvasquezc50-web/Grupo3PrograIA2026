@@ -1,5 +1,7 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.Scanner ;
 
 
@@ -9,18 +11,54 @@ public class Main {
 
 
     public static void main(String[] args) {
-        System.out.println("****=====Menu para el zoologico====****");
+        Scanner procesa = new Scanner(System.in);
 
+        int opciones;
 
+       do {
+           System.out.println("****=====Menu para el zoologico====****");
+           System.out.println("Ingrese una de las opciones:");
+           System.out.println("1.Registrar animales");
+           System.out.println("2.Ver lista de animales");
+           System.out.println("3.Alimentar animales");
+           System.out.println("4.Calcular alimento");
+           System.out.println("5 salir del programa");
+           opciones = procesa.nextInt();
+           procesa.nextLine();
+           System.out.println("Elegista la opcion:"+opciones);
 
-     {
+           switch (opciones) {
+               case 1:
+                   registrarAnimales(procesa);
+                   break;
+               case 2:
+                   System.out.println("opcion 2 ver lista de animales");
+                   break;
+               case 3:
+                   System.out.println("opcion 3 alimentar animales");
+                   break;
+               case 4:
+                   System.out.println("opcion 4 calcular alimento");
+                   break;
+               case 5:
+                   System.out.println("salir del programa");
+                   break;
+               default:
+                   System.out.println("opcion no valida");
 
-        Scanner imprime = new Scanner(System.in);
+           }
+       }while (opciones != 5) ;
+           procesa.close();
 
+       }
+public static void registrarAnimales(Scanner procesa){
+    System.out.println("Ingresa el nombre de un animal:");
+    String nombre = procesa.nextLine();
 
 
         System.out.println("Ingrese el la especie de un animal");
-        String espesie = imprime.next();
+        String espesie = procesa.next();
+
         switch (espesie) {
             case "mamifero":
                 System.out.println("elegiste un mamifero");
@@ -34,30 +72,32 @@ public class Main {
             default:
                 System.out.println("Opcion no valida");
         }
-                animal a = new animal();
-                a.pedirDatos(imprime, espesie);
-        }
+        animal a = new animal();
+        a.pedirDatos(procesa, espesie);
+    System.out.println("Animal registrado"+ nombre);
+    }
 
-    } static class animal{
-        String especie;
-        double peso;
-        String tipoDeComida;
-        double cantidadDeComida;
-        public void pedirDatos (Scanner imprime, String espesieIngresada){
-            especie = espesieIngresada;
+} class animal {
+    String especie;
+    double peso;
+    String tipoDeComida;
+    double cantidadDeComida;
 
-            System.out.println("Ingresa el peso:");
-            peso = imprime.nextDouble();
-            System.out.println("Ingresa el tipo de comida:");
-            tipoDeComida = imprime.next();
-            System.out.println("Ingresa la cantidad de comida:");
-            cantidadDeComida = imprime.nextDouble();
+    public void pedirDatos(Scanner imprime, String espesieIngresada) {
+        especie = espesieIngresada;
 
-            System.out.println("la especie es:"+ especie);
-            System.out.println("El peso ingresado es:"+ peso);
-            System.out.println("El tipo de comida es:"+
-            tipoDeComida);
-            System.out.println("Cantidad de comida"+ cantidadDeComida);
+        System.out.println("Ingresa el peso:");
+        peso = imprime.nextDouble();
+        System.out.println("Ingresa el tipo de comida:");
+        tipoDeComida = imprime.next();
+        System.out.println("Ingresa la cantidad de comida:");
+        cantidadDeComida = imprime.nextDouble();
 
-        }
-     }}
+        System.out.println("la especie es:" + especie);
+        System.out.println("El peso ingresado es:" + peso);
+        System.out.println("El tipo de comida es:" +
+                tipoDeComida);
+        System.out.println("Cantidad de comida" + cantidadDeComida);
+
+    }
+}
