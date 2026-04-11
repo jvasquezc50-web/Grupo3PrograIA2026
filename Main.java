@@ -3,17 +3,21 @@
 
 import java.util.Scanner ;
 import java.util.ArrayList;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 
 
 public class Main {
 
+    private static Object peso;
 
     public static void main(String[] args) {
+
         Scanner procesa = new Scanner(System.in);
         ArrayList<animal> lista = new ArrayList<>();
-        
 
         int opciones;
 
@@ -44,7 +48,7 @@ public class Main {
                    break;
                case 4:
                    System.out.println("opcion 4 calcular alimento");
-                   CalcularComida(procesa, lista);
+                   CalcularComida(procesa, lista, peso);
                    break;
                case 5:
                    System.out.println("salir del programa");
@@ -57,13 +61,30 @@ public class Main {
            procesa.close();
 
        }
+       public static void guardarArchivo(ArrayList<animal>lista) {
+           try {
+               PrintWriter writer = new PrintWriter(new FileWriter("animales.txt", true));
+               for (animal a : lista) {
+                   writer.println("Especie:" + a.especie);
+                   writer.println("peso:" + a.peso);
+                   writer.println("comida" + a.tipoDeComida);
+                   writer.println("Cantidad:" + a.cantidadDeComida);
+                   writer.println("______________");
+               }
+               writer.close();
+               System.out.println("Datos guardados en archivo");
+
+           } catch (IOException e) {
+               System.out.println("Error al guardar archivo");
+
+           }
+       }
+
 public static void registrarAnimales(Scanner procesa, ArrayList<animal> lista) {
     System.out.println("Ingresa el nombre de un animal:");
     String nombre = procesa.nextLine();
     animal a = null;
     lista.add(a);
-
-
     System.out.println("Ingrese el la especie de un animal");
     String espesie = procesa.next();
 
@@ -77,11 +98,18 @@ public static void registrarAnimales(Scanner procesa, ArrayList<animal> lista) {
         case "reptil":
             a = new Reptil ();
             System.out.println("elegiste un reptil");
-            break;
+            ((Reptil)a).pedirDatos(procesa,espesie);
+            lista.add(a);
+            return;
         default:
             System.out.println("Opcion no valid a");
     }
-    a = new animal();
+    a = new animal() {
+        @Override
+        public void calcularComida() {
+
+        }
+    };
     a.pedirDatos(procesa, espesie);
     System.out.println("Animal registrado" + nombre);
 } public static void VerLista(Scanner procesa, ArrayList<animal> lista){
@@ -95,23 +123,36 @@ public static void registrarAnimales(Scanner procesa, ArrayList<animal> lista) {
             }
         }
     }
-    public static void AlimentarAnimales(ArrayList<animal> procesa){
-        System.out.println("Alimentado");
+    public static void AlimentarAnimales(ArrayList<animal> lista){
+        if (!lista.isEmpty()) { for(animal a: lista)
+            System.out.println("Alimentado a:"+ a.especie);} else {
+                System.out.println("no hay animales");
+            }
     }
     public static class Reptil extends animal {
-
+        boolean seArrastra;
+        boolean tienePatas;
+        @Override
+        public void calcularComida(){
+            cantidadDeComida = peso * 0.05;
+        }
+        public void pedirDatosReptil(Scanner sc,String especie){
+            super.pedirDatos(sc,especie);
+            System.out.println("se arrastra? (true/false)");
+            seArrastra = sc.nextBoolean();
+            System.out.println("Tiene patas? (true/false)");
+            tienePatas = sc.nextBoolean();
+        }
     }
-    
-    public static void CalcularComida(Scanner procesa, ArrayList<animal> lista){
-        System.out.println("calculando");
+    public static void CalcularComida(Scanner procesa, ArrayList<animal> lista, Object peso){
     }
 
-} class animal {
+} abstract class animal {
     String especie;
     double peso;
     String tipoDeComida;
     double cantidadDeComida;
-
+}
     public void pedirDatos(Scanner imprime, String espesieIngresada) {
         especie = espesieIngresada;
 
@@ -133,4 +174,4 @@ public static void registrarAnimales(Scanner procesa, ArrayList<animal> lista) {
 
     }
 
-}
+
