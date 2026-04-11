@@ -44,8 +44,6 @@ public class Main {
 
         procesa.close();
     }
-
-    // ================= MENU ZOO =================
     public static void menuZoo(Scanner procesa) {
         ArrayList<Animal> lista = new ArrayList<>();
         int opcion;
@@ -87,8 +85,6 @@ public class Main {
 
         } while (opcion != 6);
     }
-
-    // ================= REGISTRAR =================
     public static void registrarAnimales(Scanner sc, ArrayList<Animal> lista) {
         System.out.println("Ingrese la especie (mamifero / ave / reptil):");
         String especie = sc.nextLine().toLowerCase();
@@ -115,8 +111,6 @@ public class Main {
 
         System.out.println("Animal registrado correctamente.");
     }
-
-    // ================= VER LISTA =================
     public static void verLista(ArrayList<Animal> lista) {
         if (lista.isEmpty()) {
             System.out.println("No hay animales registrados");
@@ -126,8 +120,6 @@ public class Main {
             }
         }
     }
-
-    // ================= ALIMENTAR =================
     public static void alimentarAnimales(ArrayList<Animal> lista) {
         if (lista.isEmpty()) {
             System.out.println("No hay animales");
@@ -137,16 +129,12 @@ public class Main {
             }
         }
     }
-
-    // ================= CALCULAR =================
     public static void calcularComida(ArrayList<Animal> lista) {
         for (Animal a : lista) {
             a.calcularComida();
             System.out.println("Comida calculada para " + a.especie + ": " + a.cantidadDeComida);
         }
     }
-
-    // ================= GUARDAR =================
     public static void guardarArchivo(ArrayList<Animal> lista) {
         try {
             PrintWriter writer = new PrintWriter(new FileWriter("animales.txt"));
@@ -164,8 +152,6 @@ public class Main {
         }
     }
 }
-
-// ================= CLASE BASE =================
 abstract class Animal {
     String especie;
     double peso;
@@ -194,8 +180,6 @@ abstract class Animal {
                 ", Cantidad: " + cantidadDeComida;
     }
 }
-
-// ================= MAMIFERO =================
 class Mamifero extends Animal {
     public Mamifero() {
         especie = "Mamifero";
@@ -205,8 +189,6 @@ class Mamifero extends Animal {
         cantidadDeComida = peso * 0.10;
     }
 }
-
-// ================= AVE =================
 class Ave extends Animal {
     public Ave() {
         especie = "Ave";
@@ -216,8 +198,6 @@ class Ave extends Animal {
         cantidadDeComida = peso * 0.05;
     }
 }
-
-// ================= REPTIL =================
 class Reptil extends Animal {
     public Reptil() {
         especie = "Reptil";
