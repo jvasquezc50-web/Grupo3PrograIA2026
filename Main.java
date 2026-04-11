@@ -20,12 +20,19 @@ public class Main {
             System.out.println("3. Fase 3");
             System.out.println("4. Salir");
 
-            opcionPrincipal = procesa.nextInt();
+            try {
+                opcionPrincipal = procesa.nextInt();
+            }catch (Exception e){
+                System.out.println("Error: ingrese un numero valido");
+                procesa.nextLine();
+                opcionPrincipal = 0;
+            }
             procesa.nextLine();
 
             switch (opcionPrincipal) {
                 case 1:
-                    menuZoo(procesa);
+                    ArrayList<Animal> lista = null;
+                    menuZoo(procesa, lista);
                     break;
                 case 2:
                     System.out.println("Fase 2 en construccion...");
@@ -44,8 +51,7 @@ public class Main {
 
         procesa.close();
     }
-    public static void menuZoo(Scanner procesa) {
-        ArrayList<Animal> lista = new ArrayList<>();
+    public static void menuZoo(Scanner procesa, ArrayList<Animal>lista) {
         int opcion;
 
         do {
@@ -57,8 +63,13 @@ public class Main {
             System.out.println("5. Guardar en archivo");
             System.out.println("6. Volver al menu principal");
 
-            opcion = procesa.nextInt();
+            try {
+                opcion = procesa.nextInt();
+            }catch (Exception e){
+                System.out.println("Error ingresa un numero valido");
             procesa.nextLine();
+            opcion=0;
+            } procesa.nextLine();
 
             switch (opcion) {
                 case 1:
@@ -137,7 +148,7 @@ public class Main {
     }
     public static void guardarArchivo(ArrayList<Animal> lista) {
         try {
-            PrintWriter writer = new PrintWriter(new FileWriter("animales.txt"));
+            PrintWriter writer = new PrintWriter(new FileWriter("animales.txt",true));
 
             for (Animal a : lista) {
                 writer.println(a);
@@ -159,16 +170,29 @@ abstract class Animal {
     double cantidadDeComida;
 
     public void pedirDatos(Scanner sc) {
+        while(true){
+            try{
+
         System.out.println("Ingrese peso:");
         peso = sc.nextDouble();
         sc.nextLine();
-
+        break;} catch (Exception e){
+                System.out.println("Error: ingrese un numero valido");
+                sc.nextLine();
+            }}
         System.out.println("Tipo de comida:");
         tipoDeComida = sc.nextLine();
+        while (true){
+            try {
+                System.out.println("Cantidad de comida:");
+                cantidadDeComida = sc.nextDouble();
+                sc.nextLine();
+                break; } catch (Exception e) {
+                System.out.println("error: ingrese un numero valido");
+                sc.nextLine();
+            }
+        }
 
-        System.out.println("Cantidad de comida:");
-        cantidadDeComida = sc.nextDouble();
-        sc.nextLine();
     }
 
     public abstract void calcularComida();
